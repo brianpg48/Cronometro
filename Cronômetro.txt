@@ -1,0 +1,65 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cronômetro Digital</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #tempo {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="tempo">00:00:00</div>
+  <button onclick="iniciar()">Iniciar</button>
+  <button onclick="pausar()">Pausar</button>
+  <button onclick="zerar()">Zerar</button>
+
+  <script>
+    let segundos = 0;
+    let timer = null;
+
+    function formatarTempo(segundos) {
+      const hrs = String(Math.floor(segundos / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((segundos % 3600) / 60)).padStart(2, '0');
+      const secs = String(segundos % 60).padStart(2, '0');
+      return `${hrs}:${mins}:${secs}`;
+    }
+
+    function atualizarDisplay() {
+      document.getElementById('tempo').textContent = formatarTempo(segundos);
+    }
+
+    function iniciar() {
+      if (timer) return;
+      timer = setInterval(() => {
+        segundos++;
+        atualizarDisplay();
+      }, 1000);
+    }
+
+    function pausar() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function zerar() {
+      pausar();
+      segundos = 0;
+      atualizarDisplay();
+    }
+  </script>
+
+</body>
+</html>
